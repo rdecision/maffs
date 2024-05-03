@@ -9,8 +9,7 @@ namespace linalg
 	class Vector
 	{
 	public:
-		Vector operator+(const Vector& a);
-
+		Vector<T> operator+(const Vector<T>& a);
 
 
 	private:
