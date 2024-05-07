@@ -4,7 +4,6 @@
 #include <stdexcept>
 #include <array>
 #include <random>
-#include <chrono>
 
 namespace linalg {
 
@@ -15,9 +14,6 @@ template<numeric T, size_t N>
 class Vector
 {
 public:
-
-
-
 	Vector(T nums[N])
 	{
 			
@@ -37,8 +33,8 @@ public:
 
 	static Vector Random(double min = 0, double max = 1, bool is_row_vector = false)
 	{
-		unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
-		std::mt19937 generator(seed);
+
+		std::default_random_engine re;
 		std::uniform_real_distribution distribution(min, max);
 
 		auto result = Vector<T, N>(is_row_vector);
@@ -46,7 +42,7 @@ public:
 		for (int i = 0; i < N; ++i)
 		{
 			if constexpr (std::is_same_v<T, double>)
-			result[i] = distribution(generator);
+			result[i] = distribution(re);
 		}
 
 		return result;
