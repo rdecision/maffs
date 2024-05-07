@@ -4,9 +4,6 @@ using namespace linalg;
 
 int main()
 {
-	Vector<int, 10> a = Vector<int, 10>();
-	Vector<int, 10> b = Vector<int, 10>();
-	auto test = a + b;
+	auto x = Vector<double, 2>::Random();
 	return 0;
-	
 }
