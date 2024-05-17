@@ -16,7 +16,7 @@ class Vector
 public:
 	Vector(T nums[N])
 	{
-			
+		data = std::to_array(nums);
 	}
 
 	Vector(std::initializer_list<T> init)
@@ -30,6 +30,11 @@ public:
 	}
 
 	size_t size() const { return N; }
+
+	std::pair<int, int> Dim()
+	{
+		return std::pair(rows, cols);
+	}
 
 	static Vector Random(double min = 0, double max = 1, bool is_row_vector = false)
 	{
@@ -75,7 +80,9 @@ public:
 private:
 	Vector(bool is_row = false) : is_row(is_row) {}
 	std::array<T, N> data {};
-	bool is_row;
+	bool is_row = false;
+	int rows = is_row ? 1 : N;
+	int cols = is_row ? N : 1;
 };
 
 
