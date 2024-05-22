@@ -16,7 +16,7 @@ class Vector
 public:
 	Vector(T nums[N])
 	{
-			
+
 	}
 
 	Vector(std::initializer_list<T> init)
@@ -53,7 +53,7 @@ public:
 		if (size() != a.size())
 			throw std::runtime_error("Vector sizes are not equal.");
 
-		Vector<T, N> result = Vector<T, N>(true);
+		Vector<T, N> result = Vector<T, N>(is_row);
 		for (int i = 0; i < size(); ++i)
 		{
 			result.data[i] = a.data[i] + data[i];
