@@ -9,7 +9,11 @@ include_directories(include)
 add_subdirectory("test")
 
 file(GLOB LIN_ALG "src/linalg/*.cpp")
-add_library(linalg ${LIN_ALG} "include/hardware_check.h")
+file(GLOB CALCULUS "src/calculus/*.cpp")
 
-add_executable(maffs "src/main.cpp" "include/hardware_check.h")
-target_link_libraries(maffs linalg)
+add_library(linalg ${LIN_ALG})
+add_library(calculus ${CALCULUS})
+
+
+add_executable(maffs "src/main.cpp")
+target_link_libraries(maffs linalg calculus)

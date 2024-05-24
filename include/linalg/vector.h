@@ -1,9 +1,12 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
+
 #include <stdexcept>
 #include <array>
 #include <random>
+#include "matrix.h"
+
 
 namespace linalg {
 
@@ -29,7 +32,7 @@ public:
 			data[i] = *it++;
 	}
 
-	size_t size() const { return N; }
+	size_t Size() const { return N; }
 
 	std::pair<int, int> Dim()
 	{
@@ -38,7 +41,6 @@ public:
 
 	static Vector Random(double min = 0, double max = 1, bool is_row_vector = false)
 	{
-
 		std::default_random_engine re;
 		std::uniform_real_distribution distribution(min, max);
 
@@ -55,11 +57,11 @@ public:
 
 	Vector<T, N> operator+(const Vector<T, N>& a) 
 	{
-		if (size() != a.size())
+		if (Size() != a.Size())
 			throw std::runtime_error("Vector sizes are not equal.");
 
 		Vector<T, N> result = Vector<T, N>(is_row);
-		for (int i = 0; i < size(); ++i)
+		for (int i = 0; i < Size(); ++i)
 		{
 			result.data[i] = a.data[i] + data[i];
 		}
@@ -67,6 +69,19 @@ public:
 		return result;
 	}
 
+	Vector<T, N> operator-(const Vector<T, N>& a) 
+	{
+		if (Size() != a.Size())
+			throw std::runtime_error("Vector sizes are not equal."); // should this be compile time error?
+
+		Vector<T, N> result = Vector<T, N>(is_row);
+		for (int i = 0; i < Size(); ++i)
+		{
+			result.data[i] = a.data[i] - data[i];
+		}
+
+		return result;
+	}
 
 	T operator[](int i)
 	{
@@ -76,12 +91,24 @@ public:
 		return data[i];
 	}
 
+	int operator*(const Matrix& a)
+	{
+		return 1;
+	}
+
+
+
+
 
 private:
 	Vector(bool is_row = false) : is_row(is_row) {}
+
 	std::array<T, N> data {};
+
 	bool is_row = false;
+
 	int rows = is_row ? 1 : N;
+
 	int cols = is_row ? N : 1;
 };
 
