@@ -17,7 +17,7 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 add_executable(test_vector "./linalg/test_vector.cpp")
-add_executable(test_finite_difference "calc/test_finite_difference.cpp")
+add_executable(test_finite_difference "calc/test_numerical_diff.cpp")
 target_link_libraries(test_vector GTest::gtest_main linalg)
 target_link_libraries(test_finite_difference GTest::gtest_main calculus)
 

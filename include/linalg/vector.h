@@ -5,7 +5,6 @@
 #include <stdexcept>
 #include <array>
 #include <random>
-#include "matrix.h"
 
 
 namespace linalg {
@@ -17,6 +16,8 @@ template<numeric T, size_t N>
 class Vector
 {
 public:
+	Vector(bool is_row = false) : is_row(is_row) {}
+
 	Vector(T nums[N])
 	{
 		data = std::to_array(nums);
@@ -49,7 +50,7 @@ public:
 		for (int i = 0; i < N; ++i)
 		{
 			if constexpr (std::is_same_v<T, double>)
-			result[i] = distribution(re);
+				result[i] = distribution(re);
 		}
 
 		return result;
@@ -57,9 +58,6 @@ public:
 
 	Vector<T, N> operator+(const Vector<T, N>& a) 
 	{
-		if (Size() != a.Size())
-			throw std::runtime_error("Vector sizes are not equal.");
-
 		Vector<T, N> result = Vector<T, N>(is_row);
 		for (int i = 0; i < Size(); ++i)
 		{
@@ -83,7 +81,7 @@ public:
 		return result;
 	}
 
-	T operator[](int i)
+	T& operator[](int i)
 	{
 		if (i > data.size() - 1)
 			throw std::out_of_range("Index is out of range");
@@ -91,18 +89,7 @@ public:
 		return data[i];
 	}
 
-	int operator*(const Matrix& a)
-	{
-		return 1;
-	}
-
-
-
-
-
 private:
-	Vector(bool is_row = false) : is_row(is_row) {}
-
 	std::array<T, N> data {};
 
 	bool is_row = false;

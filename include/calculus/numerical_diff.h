@@ -2,7 +2,7 @@
 #define FIN_DIFF_H
 
 #include <functional>
-
+#include "linalg/vector.h"
 
 namespace calculus {
 

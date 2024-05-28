@@ -4,7 +4,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project(maffs)
 
-
 include_directories(include)
 add_subdirectory("test")
 
