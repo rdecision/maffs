@@ -33,14 +33,14 @@ public:
 			data[i] = *it++;
 	}
 
-	size_t Size() const { return N; }
+	size_t size() const { return N; }
 
 	std::pair<int, int> Dim()
 	{
 		return std::pair(rows, cols);
 	}
 
-	static Vector Random(double min = 0, double max = 1, bool is_row_vector = false)
+	static Vector random(double min = 0, double max = 1, bool is_row_vector = false)
 	{
 		std::default_random_engine re;
 		std::uniform_real_distribution distribution(min, max);
@@ -59,7 +59,7 @@ public:
 	Vector<T, N> operator+(const Vector<T, N>& a) 
 	{
 		Vector<T, N> result = Vector<T, N>(is_row);
-		for (int i = 0; i < Size(); ++i)
+		for (int i = 0; i < size(); ++i)
 		{
 			result.data[i] = a.data[i] + data[i];
 		}
@@ -69,16 +69,26 @@ public:
 
 	Vector<T, N> operator-(const Vector<T, N>& a) 
 	{
-		if (Size() != a.Size())
+		if (size() != a.size())
 			throw std::runtime_error("Vector sizes are not equal."); // should this be compile time error?
 
 		Vector<T, N> result = Vector<T, N>(is_row);
-		for (int i = 0; i < Size(); ++i)
+		for (int i = 0; i < size(); ++i)
 		{
 			result.data[i] = a.data[i] - data[i];
 		}
 
 		return result;
+	}
+
+	double dot(const Vector<T, N>& a)
+	{
+		
+	}
+
+	Vector<T, 3> cross(const Vector<T, 3>& other)
+	{
+		
 	}
 
 	T& operator[](int i)
