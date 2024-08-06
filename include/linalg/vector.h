@@ -1,7 +1,6 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 
-
 #include <stdexcept>
 #include <array>
 #include <random>
@@ -18,12 +17,7 @@ class Vector
 public:
 	Vector(bool is_row = false) : is_row(is_row) {}
 
-	Vector(T nums[N])
-	{
-		data = std::to_array(nums);
-	}
-
-	Vector(std::initializer_list<T> init)
+	Vector(std::initializer_list<T> init, bool is_row = false) : is_row(is_row)
 	{
 		if (init.size() != N)
 			throw std::invalid_argument("Initialiser list does not match size of vector");
@@ -35,10 +29,7 @@ public:
 
 	size_t size() const { return N; }
 
-	std::pair<int, int> Dim()
-	{
-		return std::pair(rows, cols);
-	}
+	std::pair<int, int> dim() const { return dimension; }
 
 	static Vector random(double min = 0, double max = 1, bool is_row_vector = false)
 	{
@@ -58,6 +49,7 @@ public:
 
 	Vector<T, N> operator+(const Vector<T, N>& a) 
 	{
+		static_assert(this.dim == a.dim);
 		Vector<T, N> result = Vector<T, N>(is_row);
 		for (int i = 0; i < size(); ++i)
 		{
@@ -69,9 +61,7 @@ public:
 
 	Vector<T, N> operator-(const Vector<T, N>& a) 
 	{
-		if (size() != a.size())
-			throw std::runtime_error("Vector sizes are not equal."); // should this be compile time error?
-
+		static_assert(this.dim == a.dim);
 		Vector<T, N> result = Vector<T, N>(is_row);
 		for (int i = 0; i < size(); ++i)
 		{
@@ -83,12 +73,22 @@ public:
 
 	double dot(const Vector<T, N>& a)
 	{
-		
+		double res = 0;
+		for (int i = 0; i < N; i++)
+		{
+			
+		}
+		return res;
 	}
 
 	Vector<T, 3> cross(const Vector<T, 3>& other)
 	{
-		
+
+		return Vector<T, 3> {
+			(this[1] * other[2] - this[2] * other[1]),
+			(this[2] * other[0] - this[0] * other[2]),
+			(this[0] * other[1] - this[1] * other[0])
+		};
 	}
 
 	T& operator[](int i)
@@ -99,14 +99,24 @@ public:
 		return data[i];
 	}
 
+	bool operator==(const Vector<T, N>& other)
+	{
+		return (this.is_row == other.is_row) &&
+			(this[0] == other[0]) &&
+			(this[1] == other[1]) &&
+			(this[2] == other[2]);
+	}
+
 private:
 	std::array<T, N> data {};
 
-	bool is_row = false;
+	bool is_row;
 
-	int rows = is_row ? 1 : N;
+	constexpr int rows = is_row ? 1 : N;
 
-	int cols = is_row ? N : 1;
+	constexpr int cols = is_row ? N : 1;
+
+	constexpr std::pair<int, int> dimension = std::pair(rows, cols);
 };
 
 

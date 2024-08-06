@@ -13,8 +13,8 @@ public:
 	std::string toString() override;
 
 private:
-	std::shared_ptr<DifferentiableSymOp> x;
-	std::shared_ptr<DifferentiableSymOp> y;
+	std::shared_ptr<DifferentiableSymOp> f;
+	std::shared_ptr<DifferentiableSymOp> g;
 };
 
 

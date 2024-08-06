@@ -19,5 +19,5 @@ double Sum::compute()
 
 std::string Sum::toString()
 {
-	return std::format("{} + {}", x->toString(), y->toString());
+	return std::format("({} + {})", x->toString(), y->toString());
 }

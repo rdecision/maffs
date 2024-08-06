@@ -19,10 +19,9 @@ int main()
 
 
 	auto z = AutoDiffExpBuilder::CreateSum(AutoDiffExpBuilder::CreateSum(term_1, term_2), term_3);
+	auto str = z->toString();
 
-	auto str = term_2->toString();
-
-	auto test = term_2->backward(x)->toString();
+	auto test = z->backward(x)->toString();
 
 
 	return 0;
