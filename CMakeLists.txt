@@ -7,13 +7,13 @@ project(maffs)
 include_directories(include)
 add_subdirectory("test")
 
-#file(GLOB LIN_ALG "src/linalg/*.cpp")
-#file(GLOB_RECURSE CALCULUS "src/calculus/*.cpp")
+file(GLOB LIN_ALG "src/linalg/*.cpp")
+file(GLOB_RECURSE CALCULUS "src/calculus/*.cpp")
 
 file(GLOB_RECURSE EVERY "src/*.cpp")
 
-# add_library(linalg ${LIN_ALG})
-# add_library(calculus ${CALCULUS})
+add_library(linalg ${LIN_ALG})
+add_library(calculus ${CALCULUS})
 add_library(every ${EVERY})
 
 

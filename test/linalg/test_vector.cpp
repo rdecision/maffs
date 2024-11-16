@@ -20,7 +20,25 @@ TEST(test_vector, int_vector_addition_is_correct)
 
 	ASSERT_EQ(result[0], 4);
 	ASSERT_EQ(result[1], 6);
+}
 
+TEST(test_vector, double_vector_addition_is_correct)
+{
+	linalg::Vector<double, 2> a = { 1.0, 2.0 };
+	linalg::Vector<double, 2> b = { 3.0, 4.0 };
+
+	linalg::Vector<double, 2> result = a + b;
+
+	ASSERT_DOUBLE_EQ(result[0], 4.0);
+	ASSERT_DOUBLE_EQ(result[1], 6.0);
+}
+
+TEST(test_vector, vector_equality_is_correct)
+{
+	linalg::Vector<double, 2> a = { 1.0, 2.0 };
+	linalg::Vector<double, 2> b = { 1.0, 2.0 };
+
+	ASSERT_EQ(a, b);
 }
 
 TEST(test_vector, vector_random_returns_random_vector)
@@ -46,6 +64,25 @@ TEST(test_vector, vector_dim_method_works)
 	ASSERT_EQ(b.dim().second, 1);
 }
 
+TEST(test_vector, vector_dot_works)
+{
+	linalg::Vector<double, 3> a = { 1, 2, 3 };
+	linalg::Vector<double, 3> b = { 4, 5, 6 };
+
+	auto res = a.dot(b);
+
+	ASSERT_DOUBLE_EQ(res, 32);
+}
+
+TEST(test_vector, vector_euclidean_norm_works)
+{
+	linalg::Vector<double, 3> a = { 1.0, 2.0, 3.0 };
+
+	double res = a.euclidean_norm();
+
+	ASSERT_DOUBLE_EQ(res, 4);
+}
+
 TEST(test_vector, vector_cross_works)
 {
 	linalg::Vector<double, 3> a = { 1, 2, 3 };
@@ -53,5 +90,8 @@ TEST(test_vector, vector_cross_works)
 
 	auto res = a.cross(b);
 
+	auto expected = linalg::Vector<double, 3> { -3, 6, -3 };
+
+	ASSERT_EQ(res, expected);
 }
 

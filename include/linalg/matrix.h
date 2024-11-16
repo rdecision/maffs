@@ -14,7 +14,7 @@ template<numeric T, size_t rows, size_t cols>
 class Matrix
 {
 public:
-	Matrix(std::initializer_list<initializer_list<T> init)
+	Matrix(std::initializer_list<initializer_list<T>> init)
 	{
 		
 	}

@@ -4,7 +4,7 @@
 #include <stdexcept>
 #include <array>
 #include <random>
-
+#include <optional>
 
 namespace linalg {
 
@@ -29,7 +29,7 @@ public:
 
 	size_t size() const { return N; }
 
-	std::pair<int, int> dim() const { return dimension; }
+	const std::pair<int, int> dim() const { return dimension; }
 
 	static Vector random(double min = 0, double max = 1, bool is_row_vector = false)
 	{
@@ -49,19 +49,19 @@ public:
 
 	Vector<T, N> operator+(const Vector<T, N>& a) 
 	{
-		static_assert(this.dim == a.dim);
 		Vector<T, N> result = Vector<T, N>(is_row);
 		for (int i = 0; i < size(); ++i)
 		{
 			result.data[i] = a.data[i] + data[i];
 		}
 
+
+
 		return result;
 	}
 
 	Vector<T, N> operator-(const Vector<T, N>& a) 
 	{
-		static_assert(this.dim == a.dim);
 		Vector<T, N> result = Vector<T, N>(is_row);
 		for (int i = 0; i < size(); ++i)
 		{
@@ -71,24 +71,12 @@ public:
 		return result;
 	}
 
-	double dot(const Vector<T, N>& a)
+	const T& operator[](int i) const
 	{
-		double res = 0;
-		for (int i = 0; i < N; i++)
-		{
-			
-		}
-		return res;
-	}
+		if (i > data.size() - 1)
+			throw std::out_of_range("Index is out of range");
 
-	Vector<T, 3> cross(const Vector<T, 3>& other)
-	{
-
-		return Vector<T, 3> {
-			(this[1] * other[2] - this[2] * other[1]),
-			(this[2] * other[0] - this[0] * other[2]),
-			(this[0] * other[1] - this[1] * other[0])
-		};
+		return data[i];
 	}
 
 	T& operator[](int i)
@@ -99,12 +87,55 @@ public:
 		return data[i];
 	}
 
-	bool operator==(const Vector<T, N>& other)
+	bool operator==(const Vector<T, N>& other) const
 	{
-		return (this.is_row == other.is_row) &&
-			(this[0] == other[0]) &&
-			(this[1] == other[1]) &&
-			(this[2] == other[2]);
+		for (int i = 0; i < N; ++i)
+		{
+			if (data[i] != other[i])
+				return false;
+		}
+		return true;
+	}
+
+	double dot(const Vector<T, N>& a) const
+	{
+		double res = 0;
+		for (int i = 0; i < N; i++)
+		{
+			res += a[i] * data[i];
+		}
+
+		return res;
+	}
+
+	Vector<T, 3> cross(const Vector<T, 3>& other)
+	{
+
+		return Vector<T, 3> {
+			(data[1] * other[2] - data[2] * other[1]),
+				(data[2] * other[0] - data[0] * other[2]),
+				(data[0] * other[1] - data[1] * other[0])
+		};
+	}
+
+	double euclidean_norm() const
+	{
+		double res = 0;
+		for (int i = 0; i < N; ++i)
+		{
+			res += pow(data[i], 2);
+		}
+		return sqrt(res);
+	}
+
+	auto begin()
+	{
+		return data.begin();
+	}
+
+	auto end()
+	{
+		return data.end();
 	}
 
 private:
@@ -112,14 +143,14 @@ private:
 
 	bool is_row;
 
-	constexpr int rows = is_row ? 1 : N;
+	int rows = is_row ? 1 : N;
 
-	constexpr int cols = is_row ? N : 1;
+	int cols = is_row ? N : 1;
 
-	constexpr std::pair<int, int> dimension = std::pair(rows, cols);
+	std::pair<int, int> dimension = std::pair(rows, cols);
+
+
 };
-
-
 
 }
 
