@@ -6,6 +6,7 @@ project(maffs)
 
 include_directories(include)
 add_subdirectory("test")
+add_subdirectory("benchmark")
 
 file(GLOB LIN_ALG "src/linalg/*.cpp")
 file(GLOB_RECURSE CALCULUS "src/calculus/*.cpp")

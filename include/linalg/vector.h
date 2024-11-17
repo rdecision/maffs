@@ -54,9 +54,6 @@ public:
 		{
 			result.data[i] = a.data[i] + data[i];
 		}
-
-
-
 		return result;
 	}
 
@@ -148,8 +145,6 @@ private:
 	int cols = is_row ? N : 1;
 
 	std::pair<int, int> dimension = std::pair(rows, cols);
-
-
 };
 
 }
