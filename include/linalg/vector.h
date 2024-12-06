@@ -27,6 +27,14 @@ public:
 			data[i] = *it++;
 	}
 
+	Vector(std::array<T, N> init, bool is_row = false) : is_row(is_row)
+	{
+		for (size_t i = 0; i < init.size(); ++i)
+		{
+			data[i] = init[i];
+		}
+	}
+
 	size_t size() const { return N; }
 
 	const std::pair<int, int> dim() const { return dimension; }

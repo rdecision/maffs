@@ -10,6 +10,15 @@ TEST(test_vector, init_list_constructor_works)
 	ASSERT_EQ(4, a[2]);
 }
 
+TEST(test_vector, array_constructor_works)
+{
+	std::array b{1, 2, 4};
+	linalg::Vector a(b);
+	ASSERT_EQ(1, a[0]);
+	ASSERT_EQ(2, a[1]);
+	ASSERT_EQ(4, a[2]);
+}
+
 TEST(test_vector, int_vector_addition_is_correct)
 {
 	linalg::Vector<int, 2> a = { 1, 2 };
@@ -79,8 +88,8 @@ TEST(test_vector, vector_euclidean_norm_works)
 	linalg::Vector<double, 3> a = { 1.0, 2.0, 3.0 };
 
 	double res = a.euclidean_norm();
-
-	ASSERT_DOUBLE_EQ(res, 4);
+	double expected = std::sqrt(1.0 * 1.0 + 2.0 * 2.0 + 3.0 * 3.0);
+	ASSERT_DOUBLE_EQ(res, expected);
 }
 
 TEST(test_vector, vector_cross_works)
