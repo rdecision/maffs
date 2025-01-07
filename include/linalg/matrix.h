@@ -3,30 +3,62 @@
 
 #include <array>
 #include <initializer_list>
+#include <algorithm>
+#include <functional>
 #include "vector.h"
 
 namespace linalg
 {
-template<typename T>
-concept numeric = std::is_arithmetic_v<T>;
-
 template<numeric T, size_t rows, size_t cols>
 class Matrix
 {
 public:
-	Matrix(std::initializer_list<initializer_list<T>> init)
+	Matrix(std::initializer_list<std::initializer_list<T>> init)
 	{
 		// try row major for now
 		for (size_t i = 0; i < init.size(); ++i)
 		{
 			for (size_t j = 0; j < init.size(); ++j)
 			{
-				data[rows * i + j] = init[i][j]
+				data[rows * i + j] = *((*(init.begin() + i)).begin() + j);
 			}
 		}
 	}
 
-	Vector<T, cols> row(int row_num)
+	Matrix(std::array<T, rows * cols> init) : data{init}
+	{
+	}
+
+	T operator()(uint8_t i, uint8_t j)
+	{
+		return data[rows * i + j];
+	}
+
+	Matrix<T, rows, cols> operator+(const Matrix<T, rows, cols>& other)
+	{
+		std::array<T, rows * cols> new_data;
+
+		std::transform(
+			this.data.begin(), this.data.end(),
+			other.data.begin(), other.data.end(),
+			new_data.begin(), [](int a, int b) { return a + b; });
+
+		return Matrix(new_data);
+	}
+
+	Matrix<T, rows, cols> operator-(const Matrix<T, rows, cols>& other)
+	{
+		std::array<T, rows * cols> new_data;
+
+		std::transform(
+			this.data.begin(), this.data.end(),
+			other.data.begin(), other.data.end(),
+			new_data.begin(), [](int a, int b) { return a - b; });
+
+		return Matrix(new_data);
+	}
+
+	Matrix<T, 1, cols> row(int row_num)
 	{
 		std::array<T, cols> construct{};
 		size_t start = cols * (row_num - 1);
@@ -36,11 +68,30 @@ public:
 			construct[i] = data[i];
 		}
 
-		return Vector<T,cols>(construct);
+		return Matrix<T, 1, cols>(construct);
 	}
-private:
-	std::array<rows * cols> data {};
 
+
+	void map_function(std::function<void(T)>& func, uint8_t row_index = -1, uint8_t col_index = -1)
+	{
+		if (row_index == -1 && col_index == -1)
+			std::for_each(data.begin(), data.end(), func);
+		
+	}
+
+	void swap_rows(uint8_t row_idx_1, uint8_t row_idx_2)
+	{
+		
+	}
+
+	void swap_cols(uint8_t row_idx_1, uint8_t row_idx_2)
+	{
+		
+	}
+
+
+private:
+	std::array<T, rows * cols> data {};
 };
 	
 }

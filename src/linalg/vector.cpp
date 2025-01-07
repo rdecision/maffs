@@ -1,4 +1,4 @@
-#include "../../include/linalg/vector.h"
+#include "linalg/vector.h"
 
 
 namespace linalg
