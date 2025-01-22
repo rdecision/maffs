@@ -81,14 +81,24 @@ public:
 
 	void swap_rows(uint8_t row_idx_1, uint8_t row_idx_2)
 	{
-		
+		/// row_idx arguments are 0 indexed
+		std::array<T, cols> temp;
+
+		uint8_t row_1_start = row_idx_1 * cols;
+		uint8_t row_1_end = row_1_start + cols - 1;
+		uint8_t row_2_start = row_idx_2 * cols;
+		uint8_t row_2_end = row_2_start + cols - 1;
+
+		std::copy(
+			data.begin() + row_1_start,
+			data.begin() + row_1_end,
+			temp.begin());
 	}
 
 	void swap_cols(uint8_t row_idx_1, uint8_t row_idx_2)
 	{
 		
 	}
-
 
 private:
 	std::array<T, rows * cols> data {};
