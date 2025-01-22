@@ -1,18 +1,12 @@
-cmake_minimum_required(VERSION 3.14)
-
-project(benchmark)
-
-
-include(FetchContent)
-
 FetchContent_Declare(
-	benchmark
-	GIT_REPOSITORY https://github.com/google/benchmark.git
-	GIT_TAG v1.8.2
+  googlebenchmark
+  GIT_REPOSITORY    https://github.com/google/benchmark.git
+  GIT_TAG           d572f4777349d43653b21d6c2fc63020ab326db2 # version 1.7.1
 )
 
-FetchContent_MakeAvailable(benchmark)
+FetchContent_MakeAvailable(
+  googlebenchmark
+)
 
-add_executable(benchmark_vector "./linalg/benchmark_vector.cpp")
-target_link_libraries(benchmark_vector PRIVATE benchmark::benchmark benchmark::benchmark_main)
-
+add_subdirectory(linalg)
+#add_subdirectory(calculus)
