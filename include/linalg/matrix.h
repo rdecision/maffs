@@ -15,13 +15,14 @@ class Matrix
 public:
 	Matrix(std::initializer_list<std::initializer_list<T>> init)
 	{
-		// try row major for now
-		for (size_t i = 0; i < init.size(); ++i)
-		{
-			for (size_t j = 0; j < init.size(); ++j)
-			{
-				data[rows * i + j] = *((*(init.begin() + i)).begin() + j);
+		size_t i = 0;
+		for (const auto& row : init) {
+			size_t j = 0;
+			for (const auto& val : row) {
+				data[cols * i + j] = val;
+				++j;
 			}
+			++i;
 		}
 	}
 
@@ -31,7 +32,7 @@ public:
 
 	T operator()(uint8_t i, uint8_t j)
 	{
-		return data[rows * i + j];
+		return data[cols * i + j];
 	}
 
 	Matrix<T, rows, cols> operator+(const Matrix<T, rows, cols>& other)
@@ -39,8 +40,8 @@ public:
 		std::array<T, rows * cols> new_data;
 
 		std::transform(
-			this.data.begin(), this.data.end(),
-			other.data.begin(), other.data.end(),
+			data.begin(), data.end(),
+			other.data.begin(),
 			new_data.begin(), [](int a, int b) { return a + b; });
 
 		return Matrix(new_data);
@@ -51,11 +52,24 @@ public:
 		std::array<T, rows * cols> new_data;
 
 		std::transform(
-			this.data.begin(), this.data.end(),
-			other.data.begin(), other.data.end(),
+			data.begin(), data.end(),
+			other.data.begin(),
 			new_data.begin(), [](int a, int b) { return a - b; });
 
 		return Matrix(new_data);
+	}
+
+	bool operator==(const Matrix<T, rows, cols>& other)
+	{
+		for (size_t i = 0; i < data.size(); ++i)
+		{
+			if (data[i] != other->data[i])
+			{
+				return false;
+			}
+		}
+
+		return true;
 	}
 
 	Matrix<T, 1, cols> row(int row_num)
@@ -76,7 +90,6 @@ public:
 	{
 		if (row_index == -1 && col_index == -1)
 			std::for_each(data.begin(), data.end(), func);
-		
 	}
 
 	void swap_rows(uint8_t row_idx_1, uint8_t row_idx_2)
@@ -85,7 +98,7 @@ public:
 		std::array<T, cols> temp;
 
 		uint8_t row_1_start = row_idx_1 * cols;
-		uint8_t row_1_end = row_1_start + cols - 1;
+		uint8_t row_1_end = row_1_start + cols;
 		uint8_t row_2_start = row_idx_2 * cols;
 
 		std::copy(
@@ -96,7 +109,7 @@ public:
 		for (size_t i = 0; i < cols; ++i)
 		{
 			data[row_1_start + i] = data[row_2_start + i];
-			data[row_2_start + i] = data[temp + i];
+			data[row_2_start + i] = temp[i];
 		}
 	}
 

@@ -2,7 +2,7 @@
 #include "../../include/linalg/vector.h"
 
 
-TEST(test_vector, init_list_constructor_works)
+TEST(VectorTest, init_list_constructor_works)
 {
 	linalg::Vector<int, 3> a({1,2,4});
 	ASSERT_EQ(1, a[0]);
@@ -10,7 +10,7 @@ TEST(test_vector, init_list_constructor_works)
 	ASSERT_EQ(4, a[2]);
 }
 
-TEST(test_vector, array_constructor_works)
+TEST(VectorTest, array_constructor_works)
 {
 	std::array b{1, 2, 4};
 	linalg::Vector a(b);
@@ -19,7 +19,7 @@ TEST(test_vector, array_constructor_works)
 	ASSERT_EQ(4, a[2]);
 }
 
-TEST(test_vector, int_vector_addition_is_correct)
+TEST(VectorTest, int_vector_addition_is_correct)
 {
 	linalg::Vector<int, 2> a = { 1, 2 };
 	linalg::Vector<int, 2> b = { 3, 4 };
@@ -31,7 +31,7 @@ TEST(test_vector, int_vector_addition_is_correct)
 	ASSERT_EQ(result[1], 6);
 }
 
-TEST(test_vector, double_vector_addition_is_correct)
+TEST(VectorTest, double_vector_addition_is_correct)
 {
 	linalg::Vector<double, 2> a = { 1.0, 2.0 };
 	linalg::Vector<double, 2> b = { 3.0, 4.0 };
@@ -42,7 +42,7 @@ TEST(test_vector, double_vector_addition_is_correct)
 	ASSERT_DOUBLE_EQ(result[1], 6.0);
 }
 
-TEST(test_vector, vector_equality_is_correct)
+TEST(VectorTest, vector_equality_is_correct)
 {
 	linalg::Vector<double, 2> a = { 1.0, 2.0 };
 	linalg::Vector<double, 2> b = { 1.0, 2.0 };
@@ -50,19 +50,19 @@ TEST(test_vector, vector_equality_is_correct)
 	ASSERT_EQ(a, b);
 }
 
-TEST(test_vector, vector_random_returns_random_vector)
+TEST(VectorTest, vector_random_returns_random_vector)
 {
 	auto a = linalg::Vector<int,3>::random();
 	ASSERT_EQ(1, 1);
 }
 
-TEST(test_vector, vector_size_method_works)
+TEST(VectorTest, vector_size_method_works)
 {
 	auto a = linalg::Vector<double, 5>::random();
 	ASSERT_EQ(a.size(), 5);
 }
 
-TEST(test_vector, vector_dim_method_works)
+TEST(VectorTest, vector_dim_method_works)
 {
 	linalg::Vector<double, 5> a({1,2,3,4,5}, true);
 	ASSERT_EQ(a.dim().first, 1);
@@ -73,7 +73,7 @@ TEST(test_vector, vector_dim_method_works)
 	ASSERT_EQ(b.dim().second, 1);
 }
 
-TEST(test_vector, vector_dot_works)
+TEST(TestVector, vector_dot_works)
 {
 	linalg::Vector<double, 3> a = { 1, 2, 3 };
 	linalg::Vector<double, 3> b = { 4, 5, 6 };
@@ -83,7 +83,7 @@ TEST(test_vector, vector_dot_works)
 	ASSERT_DOUBLE_EQ(res, 32);
 }
 
-TEST(test_vector, vector_euclidean_norm_works)
+TEST(VectorTest, vector_euclidean_norm_works)
 {
 	linalg::Vector<double, 3> a = { 1.0, 2.0, 3.0 };
 
@@ -92,7 +92,7 @@ TEST(test_vector, vector_euclidean_norm_works)
 	ASSERT_DOUBLE_EQ(res, expected);
 }
 
-TEST(test_vector, vector_cross_works)
+TEST(VectorTest, vector_cross_works)
 {
 	linalg::Vector<double, 3> a = { 1, 2, 3 };
 	linalg::Vector<double, 3> b = { 4, 5, 6 };
