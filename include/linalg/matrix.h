@@ -87,12 +87,17 @@ public:
 		uint8_t row_1_start = row_idx_1 * cols;
 		uint8_t row_1_end = row_1_start + cols - 1;
 		uint8_t row_2_start = row_idx_2 * cols;
-		uint8_t row_2_end = row_2_start + cols - 1;
 
 		std::copy(
 			data.begin() + row_1_start,
 			data.begin() + row_1_end,
 			temp.begin());
+
+		for (size_t i = 0; i < cols; ++i)
+		{
+			data[row_1_start + i] = data[row_2_start + i];
+			data[row_2_start + i] = data[temp + i];
+		}
 	}
 
 	void swap_cols(uint8_t row_idx_1, uint8_t row_idx_2)
