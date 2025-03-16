@@ -85,6 +85,22 @@ public:
 		return Matrix<T, 1, cols>(construct);
 	}
 
+	Matrix<T, rows, cols> operator*(const Matrix<T, rows, cols>& other)
+	{
+		
+	}
+
+	Matrix<T, rows, cols> element_wise_mult(const Matrix<T, rows, cols>& other)
+	{
+		std::array<T, rows* cols> new_data;
+
+		std::transform(
+			data.begin(), data.end(),
+			other.data.begin(),
+			new_data.begin(), [](int a, int b) { return a + b; });
+
+		return Matrix<T, rows, cols>(new_data);
+	}
 
 	void map_function(std::function<void(T)>& func, uint8_t row_index = -1, uint8_t col_index = -1)
 	{
@@ -116,6 +132,18 @@ public:
 	void swap_cols(uint8_t row_idx_1, uint8_t row_idx_2)
 	{
 		
+	}
+
+	static Matrix<float, rows, cols> random(float min, float max)
+	{
+		std::minstd_rand lce(std::random_device{}()); // lce is faster than mersenne twister
+		std::uniform_real_distribution<float>(min, max);
+
+		std::array<float, rows * cols> data {};
+		for (auto& val: data)
+		{
+			
+		}
 	}
 
 private:

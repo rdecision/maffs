@@ -12,6 +12,16 @@ TEST(MatrixTest, init_list_constructor_works)
 	ASSERT_EQ(a(1, 1), 4);
 }
 
+TEST(MatrixTest, array_constructor_works)
+{
+	std::array<double, 4> data = {1,2,3,4};
+	auto a = linalg::Matrix<double, 2, 2>(data);
+	ASSERT_DOUBLE_EQ(a(0, 0), 1);
+	ASSERT_DOUBLE_EQ(a(1, 0), 3);
+	ASSERT_DOUBLE_EQ(a(0, 1), 2);
+	ASSERT_DOUBLE_EQ(a(1, 1), 4);
+}
+
 TEST(MatrixTest, index_operator_works)
 {
 	auto a = linalg::Matrix<int, 3, 4>({
